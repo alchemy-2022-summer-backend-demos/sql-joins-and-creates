@@ -7,8 +7,16 @@ describe('backend-express-template routes', () => {
   beforeEach(() => {
     return setup(pool);
   });
-  it('example test - delete me!', () => {
-    expect(1).toEqual(1);
+  it('should return a list of owners', async () => {
+    const resp = await request(app).get('/owners');
+    expect(resp.status).toBe(200);
+    expect(resp.body).toEqual([
+      { name: 'Anne' },
+      { name: 'Bob' },
+      { name: 'Carol' },
+      { name: 'Dave' },
+      { name: 'Erin' },
+    ]);
   });
   afterAll(() => {
     pool.end();
