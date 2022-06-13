@@ -31,7 +31,8 @@ INSERT INTO owners (name) VALUES
 ('Bob'),
 ('Carol'),
 ('Dave'),
-('Erin');
+('Erin'),
+('Greg');
 
 CREATE table owners_pets(
   id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,

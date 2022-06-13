@@ -11,19 +11,38 @@ describe('backend-express-template routes', () => {
     const resp = await request(app).get('/owners');
     expect(resp.status).toBe(200);
     expect(resp.body).toEqual([
-      { name: 'Anne' },
-      { name: 'Bob' },
-      { name: 'Carol' },
-      { name: 'Dave' },
-      { name: 'Erin' },
+      { id: '1', name: 'Anne' },
+      { id: '2', name: 'Bob' },
+      { id: '3', name: 'Carol' },
+      { id: '4', name: 'Dave' },
+      { id: '5', name: 'Erin' },
+      { id: '6', name: 'Greg' },
     ]);
   });
 
   it('/owner/:id should return owner detail', async () => {
     const resp = await request(app).get('/owners/1');
     expect(resp.status).toBe(200);
+    expect(resp.body.id).toEqual('1');
     expect(resp.body.name).toEqual('Anne');
     expect(resp.body).toHaveProperty('pets');
+  });
+
+  it('POST /owners should create a new owner', async () => {
+    const resp = await request(app).post('/owners').send({ name: 'Franny' });
+    expect(resp.status).toBe(200);
+    expect(resp.body.name).toBe('Franny');
+  });
+
+  it('POST /owners should create a new owner with an associated Pet', async () => {
+    const resp = await request(app)
+      .post('/owners')
+      .send({ name: 'Harriet', petIds: [1, 2] });
+    expect(resp.status).toBe(200);
+    expect(resp.body.name).toBe('Harriet');
+
+    const { body: georgia } = await request(app).get(`/owners/${resp.body.id}`);
+    expect(georgia.pets.length).toBe(2);
   });
 
   afterAll(() => {
