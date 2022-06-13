@@ -7,7 +7,7 @@ describe('backend-express-template routes', () => {
   beforeEach(() => {
     return setup(pool);
   });
-  it('should return a list of owners', async () => {
+  it('/owners should return a list of owners', async () => {
     const resp = await request(app).get('/owners');
     expect(resp.status).toBe(200);
     expect(resp.body).toEqual([
@@ -18,6 +18,14 @@ describe('backend-express-template routes', () => {
       { name: 'Erin' },
     ]);
   });
+
+  it('/owner/:id should return owner detail', async () => {
+    const resp = await request(app).get('/owners/1');
+    expect(resp.status).toBe(200);
+    expect(resp.body.name).toEqual('Anne');
+    expect(resp.body).toHaveProperty('pets');
+  });
+
   afterAll(() => {
     pool.end();
   });

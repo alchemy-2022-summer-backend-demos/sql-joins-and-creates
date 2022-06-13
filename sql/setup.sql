@@ -41,10 +41,10 @@ CREATE table owners_pets(
   FOREIGN KEY (pet_id) REFERENCES pets(id)
 );
 
--- INSERT INTO owners_pets (owner_id, pet_id) VALUES
---   (1, 1),
---   (2, 1),
---   (2, 2),
---   (3, 3),
---   (4, 3),
---   (5, 4);
+INSERT INTO owners_pets (owner_id, pet_id) VALUES
+  (1, 1),
+  (2, 1),
+  (2, 2),
+  (3, 3),
+  (4, 3),
+  (5, 4);
